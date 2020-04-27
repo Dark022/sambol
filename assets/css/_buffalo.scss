@@ -1,11 +1,6 @@
 .container {
   min-width: 320px;
-}
-
-header {
-  background-color: #62a5ee;
-  padding: 10px 20px;
-  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .logo {
@@ -130,4 +125,21 @@ table {
       width: 100%
     }
   }
+}
+
+body{
+  background-color: lightgray;
+}
+
+.temp-form{
+  width: 70%;
+  height: 400px;
+}
+
+.borderr{
+  border: solid 1px black;
+}
+
+textarea{
+  resize: none;
 }

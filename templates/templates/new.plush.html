@@ -1,0 +1,39 @@
+<section class="container mt-5">
+    <div class="mx-auto temp-form card shadow">
+        <div class="card-header">
+          New Template
+        </div>
+        <div class="card-body">
+          <form action="/" method="POST">
+              <div class="row">
+                <div class="form-group col-8">
+                  <label for="inputTitle">Title</label>
+                  <input type="text" class="form-control" id="inputTitle" name="Title" required>
+                </div>
+                <div class="form-group col">
+                  <label for="activate">Active?</label>
+                  <select class="form-control" id="active" name="Active">
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="private">Private?</label>
+                  <select class="form-control" id="private" name="Private">
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="inputContent">Content</label>
+                  <textarea class="form-control" id="inputContent" name="Content" rows="5" maxlength="250" required></textarea>
+                </div>
+              </div>
+              <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+              <button type="submit" class="btn btn-dark w-100" id="AddBtn">ADD TEMPLATE</button>
+          </form>
+        </div>
+      </div>
+</section>

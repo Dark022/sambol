@@ -59,6 +59,8 @@ func App() *buffalo.App {
 		app.Use(translations())
 
 		app.GET("/", HomeHandler)
+		app.GET("/template/new", AddTemplateForm)
+		app.POST("/", AddTemplate)
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
