@@ -3,18 +3,29 @@
         
         <a href="/template/new" id="addTask" class="btn btn-dark text-white float-right font-weight-light mb-3 btn-lg">Add Task</a>
         <div class="table-responsive">
-            <table class="table" id="toDoTable">
+            <table class="table table-striped" id="toDoTable">
                 <thead class="thead-dark ">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Content</th>
                         <th scope="col">Active</th>
                         <th scope="col">Private</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-
+                <tbody id="tableBody" class="bg-white">
+                    <%= for (template) in templates { %>
+                        <tr>
+                            <td class="align-middle"><%= template.Title %></td>
+                            <td class="align-middle"><a href="<%= templateShowPath({template_id: template.ID}) %>">Content</a></td>
+                            <td class="align-middle"><%= template.Active %></td>
+                            <td class="align-middle"><%= template.Private %></td>
+                            <td>
+                                <a href="<%= templateDeletePath({template_id: template.ID}) %>" class="btn btn-danger h0" data-confirm="Are you sure?" data-method="DELETE">Delete</a>
+                                <a href="<%= editTemplatePath ({template_id: template.ID}) %>" class="btn btn-success h0">Edit</a>
+                            </td>
+                        </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>

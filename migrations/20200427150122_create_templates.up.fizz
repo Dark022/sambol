@@ -1,0 +1,7 @@
+create_table("templates") {
+    t.Column("id", "uuid", {primary: true})
+    t.Column("title", "string", {})
+    t.Column("content", "text", {})
+    t.Column("active", "bool", {"default": false})
+    t.Column("private", "bool", {"default": false})
+}

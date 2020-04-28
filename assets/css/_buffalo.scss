@@ -133,7 +133,7 @@ body{
 
 .temp-form{
   width: 70%;
-  height: 400px;
+  height: auto;
 }
 
 .borderr{
@@ -142,4 +142,13 @@ body{
 
 textarea{
   resize: none;
+}
+
+.badrequest{
+  width: 70%;
+  height: 20px;
+}
+
+.h0{
+ font-size: 11px;
 }
