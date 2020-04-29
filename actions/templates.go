@@ -78,7 +78,7 @@ func EditTemplate(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("templates/edit.plush.html"))
 }
 
-func SaveEditTemplate(c buffalo.Context) error {
+func UpdateTemplate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	id, err := uuid.FromString(ID)
 	if err != nil {

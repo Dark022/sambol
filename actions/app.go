@@ -64,7 +64,7 @@ func App() *buffalo.App {
 		app.POST("/template/save", SaveTemplate)
 		app.DELETE("/template/{template_id}/delete/", DeleteTemplate)
 		app.GET("/template/{template_id}/edit/", EditTemplate)
-		app.PUT("/template/edit/save", SaveEditTemplate)
+		app.PUT("/template/edit/save", UpdateTemplate)
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
