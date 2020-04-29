@@ -11,6 +11,10 @@ type ModelSuite struct {
 	*suite.Model
 }
 
+type ActionSuite struct {
+	*suite.Action
+}
+
 func Test_ModelSuite(t *testing.T) {
 	model, err := suite.NewModelWithFixtures(packr.New("app:models:test:fixtures", "../fixtures"))
 	if err != nil {
