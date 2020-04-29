@@ -95,16 +95,13 @@ func (as *ActionSuite) Test_UpdateTemplate() {
 	templateTest := &models.Template{Title: "OldTest", Content: "OldTest", Active: true, Private: false}
 	as.HTML("/template/save").Post(templateTest)
 	as.NoError(as.DB.First(templateTest))
-	fmt.Println(templateTest)
 	form := url.Values{
 		"Title":   []string{"Test Update"},
 		"Content": []string{"Testing update request"},
 		"Active":  []string{"false"},
 		"Private": []string{"true"},
 	}
-
-	as.HTML("/template/save").Post(form)
-	as.HTML("/template/edit/save").Put(templateTest.ID)
-	fmt.Println(templateTest)
-
+	ID = templateTest.ID.String()
+	as.HTML(fmt.Sprintf("/template/%v/edit/", templateTest.ID)).Get()
+	as.HTML("/template/edit/save").Put(form)
 }
