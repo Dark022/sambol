@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-	"log"
 	"time"
 
 	"github.com/gobuffalo/pop/v5"
@@ -23,12 +21,11 @@ type Template struct {
 	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
 }
 
-func LoadTable() []Template {
+func LoadTable() ([]Template, error) {
 	templates := []Template{}
-	if err := DB.All(&templates); err != nil {
-		log.Fatal(err)
-	}
-	return templates
+	err := DB.All(&templates)
+
+	return templates, err
 }
 
 func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
@@ -51,18 +48,16 @@ func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
 	)
 }
 
-func SearchID(id uuid.UUID) Template {
+func SearchID(id uuid.UUID) (Template, error) {
 	template := Template{}
-	if err := DB.Find(&template, id); err != nil {
-		log.Fatal(err)
-	}
+	err := DB.Find(&template, id)
 
-	return template
+	return template, err
 }
 
-func DeleteRow(id uuid.UUID) {
+func DeleteRow(id uuid.UUID) error {
 	template := &Template{ID: id}
-	if err := DB.Destroy(template); err != nil {
-		fmt.Println(err)
-	}
+	err := DB.Destroy(template)
+
+	return err
 }

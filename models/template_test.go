@@ -13,7 +13,8 @@ func (ms *ModelSuite) Test_TableLoad() {
 		ms.DB.Create(&template)
 	}
 
-	allTemplates := LoadTable()
+	allTemplates, err := LoadTable()
+	ms.NoError(err)
 
 	for i, template := range allTemplates {
 		ms.Equal(testTemplates[i].Title, template.Title)
@@ -23,7 +24,7 @@ func (ms *ModelSuite) Test_TableLoad() {
 	}
 }
 
-func (ms *ModelSuite) Test_ViewValidation() {
+func (ms *ModelSuite) Test_ViewValidationEmpty() {
 	testTemplates := []struct {
 		Title     string
 		Content   string
@@ -33,37 +34,64 @@ func (ms *ModelSuite) Test_ViewValidation() {
 		{" ", " ", "blank", "blank"},
 		{"Test", " ", "", "blank"},
 		{" ", "Test", "blank", ""},
-		{"Title1", " ", "registered", "blank"},
-		{"Title1", "Test", "registered", ""},
 		{"Test", "Test", "", ""},
 	}
-	template := Template{Title: "Title1", Content: "Content1", Active: false, Private: false}
-	ms.DB.Create(&template)
 
 	for _, template := range testTemplates {
-		testTemplate := Template{Title: template.Title, Content: template.Content, Active: false, Private: false}
+		testTemplate := Template{
+			Title:   template.Title,
+			Content: template.Content,
+			Active:  false,
+			Private: false,
+		}
 		errors := testTemplate.ViewValidation(DB)
-		if len(errors.Keys()) == 2 {
-			ms.Contains(errors.Errors["content"][0], template.ExpectedC)
-			ms.Contains(errors.Errors["title"][0], template.ExpectedT)
+		errorK := errors.Keys()
+		errorE := errors.Errors
+		if len(errorK) == 2 {
+			ms.Contains(errorE["content"][0], template.ExpectedC)
+			ms.Contains(errorE["title"][0], template.ExpectedT)
 		}
 
-		if len(errors.Keys()) == 1 {
-			errorK := errors.Keys()
+		if len(errorK) == 1 {
 			if errorK[0] == "content" {
-				ms.Contains(errors.Errors["content"][0], template.ExpectedC)
-			} else {
-				ms.Contains(errors.Errors["title"][0], template.ExpectedT)
+				ms.Contains(errorE["content"][0], template.ExpectedC)
+			}
+
+			if errorK[0] == "title" {
+				ms.Contains(errorE["title"][0], template.ExpectedT)
 			}
 		}
 	}
+}
+
+func (ms *ModelSuite) Test_ViewValidationExists() {
+	template := Template{
+		Title:   "Title1",
+		Content: "Content",
+		Active:  true,
+		Private: false,
+	}
+	ms.DB.Create(&template)
+
+	templateTest := Template{
+		Title:   "Title1",
+		Content: "Testing if exists validation",
+		Active:  false,
+		Private: true,
+	}
+
+	errors := templateTest.ViewValidation(DB)
+
+	ms.Error(errors)
+	ms.Contains(errors.String(), "registered")
 }
 
 func (ms *ModelSuite) Test_SearchID() {
 	template := Template{Title: "Title1", Content: "Content1", Active: false, Private: false}
 	ms.DB.Create(&template)
 
-	testTemplate := SearchID(template.ID)
+	testTemplate, err := SearchID(template.ID)
+	ms.NoError(err)
 
 	ms.Equal(testTemplate.ID, template.ID)
 	ms.Equal(testTemplate.Title, template.Title)

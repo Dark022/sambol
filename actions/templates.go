@@ -48,7 +48,10 @@ func ShowTemplate(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
-	template := models.SearchID(id)
+	template, err := models.SearchID(id)
+	if err != nil {
+		return err
+	}
 	c.Set("template", template)
 	return c.Render(http.StatusOK, r.HTML("templates/show.plush.html"))
 }
@@ -72,7 +75,10 @@ func EditTemplate(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
-	template := models.SearchID(id)
+	template, err := models.SearchID(id)
+	if err != nil {
+		return err
+	}
 	c.Set("template", template)
 	return c.Render(http.StatusOK, r.HTML("templates/edit.plush.html"))
 }
@@ -83,7 +89,10 @@ func UpdateTemplate(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
-	template := models.SearchID(id)
+	template, err := models.SearchID(id)
+	if err != nil {
+		return err
+	}
 
 	templateForm := models.Template{}
 
