@@ -23,7 +23,7 @@ func (ms *ModelSuite) Test_TableLoad() {
 	}
 }
 
-func (ms *ModelSuite) Test_ViewValidation() {
+/*func (ms *ModelSuite) Test_ViewValidation() {
 	testTemplates := []struct {
 		Title     string
 		Content   string
@@ -47,7 +47,7 @@ func (ms *ModelSuite) Test_ViewValidation() {
 		ms.Equal(titleResult, template.ExpectedT)
 		ms.Equal(contentResult, template.ExpectedC)
 	}
-}
+}*/
 
 func (ms *ModelSuite) Test_SearchID() {
 	template := Template{Title: "Title1", Content: "Content1", Active: false, Private: false}

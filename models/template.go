@@ -3,9 +3,9 @@ package models
 import (
 	"fmt"
 	"log"
-	"strings"
 	"time"
 
+	"github.com/gobuffalo/pop/v5"
 	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
@@ -31,41 +31,24 @@ func LoadTable() []Template {
 	return templates
 }
 
-func ViewValidation(template Template) (string, string) {
-	templates := []Template{}
-	if err := DB.All(&templates); err != nil {
-		log.Fatal(err)
-	}
-	// 2 errores: content, title
-	var titleValidation, contentValidation string
-	Errors := validate.Validate(
-		&validators.StringIsPresent{Field: template.Title, Name: template.Title, Message: "Title can't be blank"},
-		&validators.StringIsPresent{Field: template.Content, Name: template.Content, Message: "Content can't be blank"},
+func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
+	return validate.Validate(
+		&validators.StringIsPresent{Field: tmp.Title, Name: "Title", Message: "Title can't be blank"},
+		&validators.StringIsPresent{Field: tmp.Title, Name: "Content", Message: "Content can't be blank"},
+
+		&validators.FuncValidator{
+			Field:   tmp.Title,
+			Name:    "Title",
+			Message: "Title \"%v\" already registered",
+			Fn: func() bool {
+				titleExists, err := tx.Where("title = ?", tmp.Title).Exists(&Template{})
+				if err != nil {
+					return false
+				}
+				return !titleExists
+			},
+		},
 	)
-	errors := Errors.Errors
-	if len(errors[""]) == 2 {
-		titleValidation = "empty"
-		contentValidation = "empty"
-	} else if len(errors[""]) == 1 {
-		if strings.Contains(errors[""][0], "Content") {
-			titleValidation = "fill"
-			contentValidation = "empty"
-		} else if strings.Contains(errors[""][0], "Title") {
-			titleValidation = "empty"
-			contentValidation = "fill"
-		}
-	} else {
-		titleValidation = "fill"
-		contentValidation = "fill"
-	}
-
-	for _, tmpt := range templates {
-		if strings.ToLower(tmpt.Title) == strings.ToLower(template.Title) {
-			titleValidation = "same_title"
-		}
-	}
-
-	return titleValidation, contentValidation
 }
 
 func SearchID(id uuid.UUID) Template {

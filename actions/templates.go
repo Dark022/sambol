@@ -26,12 +26,11 @@ func SaveTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
-	invalidTitle, invalidContent := models.ViewValidation(template)
-	if invalidTitle != "fill" || invalidContent != "fill" {
+	if errors := template.ViewValidation(tx); errors.HasAny() {
 		c.Set("template", template)
-		c.Set("invalidTitle", invalidTitle)
-		c.Set("invalidContent", invalidContent)
-		return c.Render(200, r.HTML("templates/new.plush.html"))
+		c.Set("errors", errors)
+
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("templates/new.plush.html"))
 	}
 
 	//Create table row
@@ -93,13 +92,6 @@ func UpdateTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
-	invalidTitle, invalidContent := models.ViewValidation(templateForm)
-	if invalidTitle != "fill" || invalidContent != "fill" {
-		c.Set("template", template)
-		c.Set("invalidTitle", invalidTitle)
-		c.Set("invalidContent", invalidContent)
-		return c.Render(200, r.HTML("templates/edit.plush.html"))
-	}
 
 	templateForm.ID = template.ID
 

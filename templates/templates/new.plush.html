@@ -7,14 +7,7 @@
           <%= form_for(template, {action: templateSavePath(), method: "POST", class: "pb-4"}) { %>
             <div class="row align-items-center">
               <div class="col-8">
-                <%= if (invalidTitle == "empty") { %>
-                  <%= f.InputTag("Title", {placeholder: "Title can't be blank", class: "border-danger"}) %>
-                <% } else if (invalidTitle == "same_title") { %>  
-                  <%= f.InputTag("Title", {value: "", placeholder: "Title already registered", class: "border-danger"}) %>
-                <% } else { %>
-                  <%= f.InputTag("Title", {placeholder: "Title"}) %>
-                <% } %>
-
+                  <%= f.InputTag("Title", {placeholder: "Title..."}) %>
               </div>
               <div class="col">
                 <%= f.CheckboxTag("Active", {class: "mt-5", unchecked: false}) %>     
@@ -25,11 +18,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <%= if (invalidContent == "empty") { %>
-                  <%= f.TextArea("Content", {placeholder: "Content can't be blank", rows: "5", maxlength: "250", class: "border-danger"}) %>
-                <% } else { %>
                   <%= f.TextArea("Content", {placeholder: "Content...", rows: "5", maxlength: "250"}) %>
-                <% } %>
               </div>
             </div>
             <input type="submit" value="Save" class="btn btn-dark w-100">
