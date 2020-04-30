@@ -34,7 +34,7 @@ func LoadTable() []Template {
 func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: tmp.Title, Name: "Title", Message: "Title can't be blank"},
-		&validators.StringIsPresent{Field: tmp.Title, Name: "Content", Message: "Content can't be blank"},
+		&validators.StringIsPresent{Field: tmp.Content, Name: "Content", Message: "Content can't be blank"},
 
 		&validators.FuncValidator{
 			Field:   tmp.Title,

@@ -92,6 +92,12 @@ func UpdateTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
+	if errors := template.ViewValidation(tx); errors.HasAny() {
+		c.Set("template", template)
+		c.Set("errors", errors)
+
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("templates/new.plush.html"))
+	}
 
 	templateForm.ID = template.ID
 

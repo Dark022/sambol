@@ -23,31 +23,41 @@ func (ms *ModelSuite) Test_TableLoad() {
 	}
 }
 
-/*func (ms *ModelSuite) Test_ViewValidation() {
+func (ms *ModelSuite) Test_ViewValidation() {
 	testTemplates := []struct {
 		Title     string
 		Content   string
 		ExpectedT string
 		ExpectedC string
 	}{
-		{" ", " ", "empty", "empty"},
-		{"Test", " ", "fill", "empty"},
-		{" ", "Test", "empty", "fill"},
-		{"Title1", " ", "same_title", "empty"},
-		{"Title1", "Test", "same_title", "fill"},
-		{"Test", "Test", "fill", "fill"},
+		{" ", " ", "blank", "blank"},
+		{"Test", " ", "", "blank"},
+		{" ", "Test", "blank", ""},
+		{"Title1", " ", "registered", "blank"},
+		{"Title1", "Test", "registered", ""},
+		{"Test", "Test", "", ""},
 	}
-
 	template := Template{Title: "Title1", Content: "Content1", Active: false, Private: false}
 	ms.DB.Create(&template)
 
 	for _, template := range testTemplates {
 		testTemplate := Template{Title: template.Title, Content: template.Content, Active: false, Private: false}
-		titleResult, contentResult := ViewValidation(testTemplate)
-		ms.Equal(titleResult, template.ExpectedT)
-		ms.Equal(contentResult, template.ExpectedC)
+		errors := testTemplate.ViewValidation(DB)
+		if len(errors.Keys()) == 2 {
+			ms.Contains(errors.Errors["content"][0], template.ExpectedC)
+			ms.Contains(errors.Errors["title"][0], template.ExpectedT)
+		}
+
+		if len(errors.Keys()) == 1 {
+			errorK := errors.Keys()
+			if errorK[0] == "content" {
+				ms.Contains(errors.Errors["content"][0], template.ExpectedC)
+			} else {
+				ms.Contains(errors.Errors["title"][0], template.ExpectedT)
+			}
+		}
 	}
-}*/
+}
 
 func (ms *ModelSuite) Test_SearchID() {
 	template := Template{Title: "Title1", Content: "Content1", Active: false, Private: false}
