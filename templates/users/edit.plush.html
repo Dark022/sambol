@@ -1,0 +1,25 @@
+<section class="container mt-5">
+    <div class="mx-auto temp-form card shadow">
+        <div class="card-header">
+          Edit User
+        </div>
+        <div class="card-body pb-4">
+          <%= form_for(user, {action: editUserSavePath({user_id: user.ID}), method: "PUT", class: "pb-4"}) { %>
+            <div class="row align-items-center">
+              <div class="col-6">
+                  <%= f.InputTag("FirstName", {placeholder: "Name..."}) %>
+              </div>
+              <div class="col-6">
+                <%= f.InputTag("LastName", {placeholder: "Last Name..."}) %>     
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <%= f.InputTag("Email", {type: "Email"}) %>   
+              </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-dark w-100">
+          <% } %>
+        </div>
+      </div>
+</section>

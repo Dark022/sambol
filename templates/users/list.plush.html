@@ -1,0 +1,32 @@
+<header>
+    <div class="container mt-3 px-5">
+        
+        <a href="/user/new" id="addTask" class="btn btn-dark text-white float-right font-weight-light mb-3 btn-lg">Add User</a>
+        <div class="table-responsive">
+            <table class="table table-striped" id="toDoTable">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="bg-white">
+                    <%= for (user) in users { %>
+                        <tr>
+                            <td class="align-middle"><%= user.FirstName %></td>
+                            <td class="align-middle"><%= user.LastName %></td>
+                            <td class="align-middle"><%= user.Email %></td>
+                            <td>
+                                <a href="<%= userDeletePath ({user_id: user.ID}) %>" class="btn btn-danger h0" data-confirm="Are you sure?" data-method="DELETE">Delete</a>
+                                <a href="<%= editUserPath ({user_id: user.ID}) %>" class="btn btn-success h0">Edit</a>
+                                <a href="<%= userShowPath  ({user_id: user.ID}) %>" class="btn btn-primary h0">Show</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</header>

@@ -35,7 +35,7 @@ func SaveTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
-	if errors := template.ViewValidation(tx); errors.HasAny() {
+	if errors := template.ViewValidation(tx, uuid.Nil); errors.HasAny() {
 		c.Set("template", template)
 		c.Set("errors", errors)
 
@@ -51,9 +51,7 @@ func SaveTemplate(c buffalo.Context) error {
 }
 
 func ShowTemplate(c buffalo.Context) error {
-	idStr := c.Param("template_id")
-
-	id, err := uuid.FromString(idStr)
+	id, err := uuid.FromString(c.Param("template_id"))
 	if err != nil {
 		return err
 	}
@@ -66,9 +64,7 @@ func ShowTemplate(c buffalo.Context) error {
 }
 
 func DeleteTemplate(c buffalo.Context) error {
-	idStr := c.Param("template_id")
-
-	id, err := uuid.FromString(idStr)
+	id, err := uuid.FromString(c.Param("template_id"))
 	if err != nil {
 		return err
 	}
@@ -78,9 +74,7 @@ func DeleteTemplate(c buffalo.Context) error {
 }
 
 func EditTemplate(c buffalo.Context) error {
-	ID = c.Param("template_id")
-
-	id, err := uuid.FromString(ID)
+	id, err := uuid.FromString(c.Param("template_id"))
 	if err != nil {
 		return err
 	}
@@ -94,7 +88,7 @@ func EditTemplate(c buffalo.Context) error {
 
 func UpdateTemplate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
-	id, err := uuid.FromString(ID)
+	id, err := uuid.FromString(c.Param("template_id"))
 	if err != nil {
 		return err
 	}
@@ -110,11 +104,11 @@ func UpdateTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
-	if errors := templateForm.ViewValidation(tx); errors.HasAny() {
+	if errors := templateForm.ViewValidation(tx, id); errors.HasAny() {
 		c.Set("template", template)
 		c.Set("errors", errors)
 
-		return c.Render(http.StatusUnprocessableEntity, r.HTML("templates/new.plush.html"))
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("templates/edit.plush.html"))
 	}
 
 	templateForm.ID = template.ID

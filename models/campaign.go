@@ -29,7 +29,7 @@ func LoadCampaignTable() ([]Campaign, error) {
 	return campaign, err
 }
 
-func (c *Campaign) CampaignValidation(tx *pop.Connection) *validate.Errors {
+func (c *Campaign) CampaignValidation(tx *pop.Connection, id uuid.UUID) *validate.Errors {
 
 	return validate.Validate(
 		&validators.StringIsPresent{Field: c.Name, Name: "Name", Message: "Name can't be blank"},
@@ -40,7 +40,7 @@ func (c *Campaign) CampaignValidation(tx *pop.Connection) *validate.Errors {
 			Name:    "Name",
 			Message: "Name \"%v\" already registered",
 			Fn: func() bool {
-				nameExists, err := tx.Where("name = ?", c.Name).Exists(&Campaign{})
+				nameExists, err := tx.Where("name = ?", c.Name).Where("id != ?", id).Exists(&Campaign{})
 				if err != nil {
 					return false
 				}

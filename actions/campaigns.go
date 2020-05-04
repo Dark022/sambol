@@ -1,7 +1,6 @@
 package actions
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Dark022/sambol/models"
@@ -40,7 +39,7 @@ func SaveCampaign(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if name is already registered
-	if errors := campaign.CampaignValidation(tx); errors.HasAny() {
+	if errors := campaign.CampaignValidation(tx, uuid.Nil); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
 		c.Set("today", campaign.StartDate)
@@ -58,9 +57,7 @@ func SaveCampaign(c buffalo.Context) error {
 }
 
 func ShowCampaign(c buffalo.Context) error {
-	idStr := c.Param("campaign_id")
-	fmt.Println(idStr)
-	id, err := uuid.FromString(idStr)
+	id, err := uuid.FromString(c.Param("campaign_id"))
 	if err != nil {
 		return err
 	}
@@ -74,9 +71,7 @@ func ShowCampaign(c buffalo.Context) error {
 }
 
 func DeleteCampaing(c buffalo.Context) error {
-	idStr := c.Param("campaign_id")
-	fmt.Println(idStr)
-	id, err := uuid.FromString(idStr)
+	id, err := uuid.FromString(c.Param("campaign_id"))
 	if err != nil {
 		return err
 	}
@@ -86,10 +81,9 @@ func DeleteCampaing(c buffalo.Context) error {
 }
 
 func EditCampaign(c buffalo.Context) error {
-	ID = c.Param("campaign_id")
 	today, _ := models.TodayTomorrow()
 
-	id, err := uuid.FromString(ID)
+	id, err := uuid.FromString(c.Param("campaign_id"))
 	if err != nil {
 		return err
 	}
@@ -106,7 +100,7 @@ func EditCampaign(c buffalo.Context) error {
 
 func UpdateCampaign(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
-	id, err := uuid.FromString(ID)
+	id, err := uuid.FromString(c.Param("campaign_id"))
 	if err != nil {
 		return err
 	}
@@ -122,7 +116,7 @@ func UpdateCampaign(c buffalo.Context) error {
 	}
 	today, _ := models.TodayTomorrow()
 	//Validate if inputs are empty and if title is already registered
-	if errors := campaignForm.CampaignValidation(tx); errors.HasAny() {
+	if errors := campaignForm.CampaignValidation(tx, id); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
 		c.Set("today", today)

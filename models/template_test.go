@@ -1,5 +1,7 @@
 package models
 
+import "github.com/gofrs/uuid"
+
 func (ms *ModelSuite) Test_TableLoad() {
 	testTemplates := []Template{
 		{Title: "Title1", Content: "Content1", Active: false, Private: false},
@@ -44,7 +46,7 @@ func (ms *ModelSuite) Test_ViewValidationEmpty() {
 			Active:  false,
 			Private: false,
 		}
-		errors := testTemplate.ViewValidation(DB)
+		errors := testTemplate.ViewValidation(DB, uuid.Nil)
 		errorK := errors.Keys()
 		errorE := errors.Errors
 		if len(errorK) == 2 {
@@ -80,7 +82,7 @@ func (ms *ModelSuite) Test_ViewValidationExists() {
 		Private: true,
 	}
 
-	errors := templateTest.ViewValidation(DB)
+	errors := templateTest.ViewValidation(DB, uuid.Nil)
 
 	ms.Error(errors)
 	ms.Contains(errors.String(), "registered")

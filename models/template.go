@@ -28,7 +28,7 @@ func LoadTable() ([]Template, error) {
 	return templates, err
 }
 
-func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
+func (tmp *Template) ViewValidation(tx *pop.Connection, id uuid.UUID) *validate.Errors {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: tmp.Title, Name: "Title", Message: "Title can't be blank"},
 		&validators.StringIsPresent{Field: tmp.Content, Name: "Content", Message: "Content can't be blank"},
@@ -38,7 +38,7 @@ func (tmp *Template) ViewValidation(tx *pop.Connection) *validate.Errors {
 			Name:    "Title",
 			Message: "Title \"%v\" already registered",
 			Fn: func() bool {
-				titleExists, err := tx.Where("title = ?", tmp.Title).Exists(&Template{})
+				titleExists, err := tx.Where("title = ?", tmp.Title).Where("id != ?", id).Exists(&Template{})
 				if err != nil {
 					return false
 				}

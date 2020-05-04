@@ -4,7 +4,7 @@
           Edit Template
         </div>
         <div class="card-body pb-4">
-          <%= form_for(template, {action: editTemplateSavePath(), method: "PUT", class: "pb-4"}) { %>
+          <%= form_for(template, {action: editTemplateSavePath({template_id: template.ID}), method: "PUT", class: "pb-4"}) { %>
             <div class="row align-items-center">
               <div class="col-8">
                 <%= if (invalidTitle == "empty") { %>

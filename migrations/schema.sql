@@ -66,6 +66,22 @@ CREATE TABLE public.templates (
 ALTER TABLE public.templates OWNER TO postgres;
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id uuid NOT NULL,
+    firstname text NOT NULL,
+    lastname text NOT NULL,
+    email text NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
 -- Name: campaigns campaigns_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -79,6 +95,14 @@ ALTER TABLE ONLY public.campaigns
 
 ALTER TABLE ONLY public.templates
     ADD CONSTRAINT templates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --

@@ -67,7 +67,7 @@ func App() *buffalo.App {
 		app.POST("/template/save", SaveTemplate)
 		app.DELETE("/template/{template_id}/delete/", DeleteTemplate)
 		app.GET("/template/{template_id}/edit/", EditTemplate)
-		app.PUT("/template/edit/save", UpdateTemplate)
+		app.PUT("/template/{template_id}/edit/save", UpdateTemplate)
 
 		//Campaign Handlers
 		app.GET("/campaign", ListCampaign)
@@ -76,7 +76,16 @@ func App() *buffalo.App {
 		app.POST("/campaign/save", SaveCampaign)
 		app.DELETE("/campaign/{campaign_id}/delete/", DeleteCampaing)
 		app.GET("/campaign/{campaign_id}/edit/", EditCampaign)
-		app.PUT("/campaign/edit/save", UpdateCampaign)
+		app.PUT("/campaign/{campaign_id}/edit/save", UpdateCampaign)
+
+		//User Handlers
+		app.GET("/user", ListUser)
+		app.GET("/user/new", NewUser)
+		app.GET("/user/{user_id}/show", ShowUser)
+		app.POST("/user/save", SaveUser)
+		app.DELETE("/user/{user_id}/delete/", DeleteUser)
+		app.GET("/user/{user_id}/edit/", EditUser)
+		app.PUT("/user/{user_id}/edit/save", UpdateUser)
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
