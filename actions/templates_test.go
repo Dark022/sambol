@@ -31,7 +31,7 @@ func (as *ActionSuite) Test_SaveTemplate() {
 	as.Equal("TestContent", templateTest.Content)
 	as.True(templateTest.Active)
 	as.False(templateTest.Private)
-	as.Equal("/", res.Location())
+	as.Equal("/template", res.Location())
 	as.Equal(http.StatusSeeOther, res.Code)
 }
 
@@ -87,7 +87,7 @@ func (as *ActionSuite) Test_DeleteTemplate() {
 	res := as.HTML(fmt.Sprintf("/template/%v/delete/", templateTest.ID)).Delete()
 
 	as.Error(as.DB.First(templateTest))
-	as.Equal("/", res.Location())
+	as.Equal("/template", res.Location())
 	as.Equal(http.StatusSeeOther, res.Code)
 }
 

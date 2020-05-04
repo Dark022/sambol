@@ -22,21 +22,9 @@ func ListCampaign(c buffalo.Context) error {
 }
 
 func NewCampaign(c buffalo.Context) error {
-	templates, err := models.LoadTable()
-	if err != nil {
-		return err
-	}
-
-	var templatesID = make([]string, len(templates))
-
-	for i, template := range templates {
-		templatesID[i] = template.ID.String()
-	}
-
 	today, tomorrow := models.TodayTomorrow()
 	campaign := models.Campaign{}
 	c.Set("campaign", campaign)
-	c.Set("templatesID", templatesID)
 	c.Set("today", today)
 	c.Set("tomorrow", tomorrow)
 
@@ -51,20 +39,10 @@ func SaveCampaign(c buffalo.Context) error {
 		return err
 	}
 
-	templates, err := models.LoadTable()
-	if err != nil {
-		return err
-	}
-	var templatesID = make([]string, len(templates))
-	for i, template := range templates {
-		templatesID[i] = template.ID.String()
-	}
-
 	//Validate if inputs are empty and if name is already registered
 	if errors := campaign.CampaignValidation(tx); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
-		c.Set("templatesID", templatesID)
 		c.Set("today", campaign.StartDate)
 		c.Set("tomorrow", campaign.EndDate)
 
@@ -108,19 +86,6 @@ func DeleteCampaing(c buffalo.Context) error {
 }
 
 func EditCampaign(c buffalo.Context) error {
-	//Retrive templatesID to make select tag options
-	templates, err := models.LoadTable()
-	if err != nil {
-		return err
-	}
-
-	var templatesID = make([]string, len(templates))
-
-	for i, template := range templates {
-		templatesID[i] = template.ID.String()
-	}
-	//----
-
 	ID = c.Param("campaign_id")
 	today, _ := models.TodayTomorrow()
 
@@ -135,24 +100,11 @@ func EditCampaign(c buffalo.Context) error {
 	c.Set("campaign", campaign)
 	c.Set("today", today)
 	c.Set("dateValue", campaign.StartDate)
-	c.Set("templatesID", templatesID)
 
 	return c.Render(http.StatusOK, r.HTML("campaigns/edit.plush.html"))
 }
 
 func UpdateCampaign(c buffalo.Context) error {
-	//Retrive templatesID to make select tag options
-	templates, err := models.LoadTable()
-	if err != nil {
-		return err
-	}
-
-	var templatesID = make([]string, len(templates))
-
-	for i, template := range templates {
-		templatesID[i] = template.ID.String()
-	}
-	//----
 	tx := c.Value("tx").(*pop.Connection)
 	id, err := uuid.FromString(ID)
 	if err != nil {
@@ -173,7 +125,6 @@ func UpdateCampaign(c buffalo.Context) error {
 	if errors := campaignForm.CampaignValidation(tx); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
-		c.Set("templatesID", templatesID)
 		c.Set("today", today)
 		c.Set("dateValue", campaignForm.StartDate)
 
