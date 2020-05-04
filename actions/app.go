@@ -59,12 +59,24 @@ func App() *buffalo.App {
 		app.Use(translations())
 
 		app.GET("/", HomeHandler)
+
+		//Templates Handlers
+		app.GET("/template", ListTemplate)
 		app.GET("/template/new", NewTemplate)
 		app.GET("/template/{template_id}/show/", ShowTemplate)
 		app.POST("/template/save", SaveTemplate)
 		app.DELETE("/template/{template_id}/delete/", DeleteTemplate)
 		app.GET("/template/{template_id}/edit/", EditTemplate)
 		app.PUT("/template/edit/save", UpdateTemplate)
+
+		//Campaign Handlers
+		app.GET("/campaign", ListCampaign)
+		app.GET("/campaign/new", NewCampaign)
+		app.GET("/campaign/{campaign_id}/show", ShowCampaign)
+		app.POST("/campaign/save", SaveCampaign)
+		app.DELETE("/campaign/{campaign_id}/delete/", DeleteCampaing)
+		app.GET("/campaign/{campaign_id}/edit/", EditCampaign)
+		app.PUT("/campaign/edit/save", UpdateCampaign)
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}

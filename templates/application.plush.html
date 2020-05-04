@@ -10,6 +10,17 @@
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
   </head>
   <body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+          <div class="container">
+              <a class="navbar-brand" href="/">SamBol</a>
+              <div class="row text-white">
+                <a class="nav-link" href="/template/">Templates</a>
+                <a class="nav-link" href="/campaign/">Campaigns</a>
+              </div>              
+          </div>         
+        </nav>
+    </header>
 
     <div class="container">
       <%= partial("flash.html") %>

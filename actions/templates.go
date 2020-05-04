@@ -11,6 +11,15 @@ import (
 
 var ID string
 
+func ListTemplate(c buffalo.Context) error {
+	templates, err := models.LoadTable()
+	if err != nil {
+		return err
+	}
+	c.Set("templates", templates)
+	return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
+}
+
 func NewTemplate(c buffalo.Context) error {
 	template := models.Template{}
 	c.Set("template", template)
@@ -38,7 +47,7 @@ func SaveTemplate(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/")
+	return c.Redirect(http.StatusSeeOther, "/template")
 }
 
 func ShowTemplate(c buffalo.Context) error {
@@ -65,7 +74,7 @@ func DeleteTemplate(c buffalo.Context) error {
 	}
 	models.DeleteRow(id)
 
-	return c.Redirect(http.StatusSeeOther, "/")
+	return c.Redirect(http.StatusSeeOther, "/template")
 }
 
 func EditTemplate(c buffalo.Context) error {
@@ -101,7 +110,7 @@ func UpdateTemplate(c buffalo.Context) error {
 	}
 
 	//Validate if inputs are empty and if title is already registered
-	if errors := template.ViewValidation(tx); errors.HasAny() {
+	if errors := templateForm.ViewValidation(tx); errors.HasAny() {
 		c.Set("template", template)
 		c.Set("errors", errors)
 
@@ -114,5 +123,5 @@ func UpdateTemplate(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/")
+	return c.Redirect(http.StatusSeeOther, "/template")
 }

@@ -1,0 +1,30 @@
+<section class="container mt-5">
+    <div class="mx-auto temp-form card shadow">
+        <div class="card-header">
+          Edit Campaign
+        </div>
+        <div class="card-body pb-4">
+          <%= form_for(campaign, {action:  editCampaignSavePath(), method: "PUT", class: "pb-4"}) { %>
+            <div class="row align-items-center">
+              <div class="col-12">
+                  <%= f.InputTag("Name", {placeholder: "Name..."}) %>
+              </div>
+              <div class="col-6">
+                <%= f.InputTag("StartDate", {type: "date", min: today, value: dateValue}) %>     
+              </div>
+              <div class="col-6">
+                <%= f.InputTag("EndDate", {type: "date"}) %>   
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <%= f.SelectTag("TemplateID", {
+                      options: templatesID
+                  }) %>
+              </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-dark w-100">
+          <% } %>
+        </div>
+      </div>
+</section>

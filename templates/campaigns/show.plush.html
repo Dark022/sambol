@@ -1,0 +1,19 @@
+<section class="container mt-5">
+    <div class="mx-auto temp-form card shadow">
+        <div class="card-header">
+            <h4><%= campaign.Name %></h4>
+        </div>
+        <div class="card-body">
+            <div class="mb-5">
+                <span class="mr-5"><%= campaign.StartDate %></span>
+                -
+                <span class="ml-5"><%= campaign.EndDate %></span>
+            </div>
+            <div>Template ID:<%= campaign.TemplateID %></div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="/campaign" class="btn btn-dark w-50">GO BACK</a>
+        </div>
+    </div>
+    
+</section>

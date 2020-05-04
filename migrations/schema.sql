@@ -21,6 +21,23 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: campaigns; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.campaigns (
+    id uuid NOT NULL,
+    name text NOT NULL,
+    template_id uuid NOT NULL,
+    start_date timestamp with time zone NOT NULL,
+    end_date timestamp with time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.campaigns OWNER TO postgres;
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -47,6 +64,14 @@ CREATE TABLE public.templates (
 
 
 ALTER TABLE public.templates OWNER TO postgres;
+
+--
+-- Name: campaigns campaigns_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.campaigns
+    ADD CONSTRAINT campaigns_pkey PRIMARY KEY (id);
+
 
 --
 -- Name: templates templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
