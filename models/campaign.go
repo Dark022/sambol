@@ -22,6 +22,15 @@ type Campaign struct {
 	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
 }
 
+type CampaignUsers struct {
+	ID         uuid.UUID `json:"id" db:"id"`
+	CampaignID uuid.UUID `json:"campaign_id" db:"campaign_id"`
+	UserID     uuid.UUID `json:"user_id" db:"user_id"`
+
+	CreatedAt  time.Time `json:"created_at" db:"created_at"`
+	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
+}
+
 func LoadCampaignTable() ([]Campaign, error) {
 	campaign := []Campaign{}
 	err := DB.All(&campaign)
@@ -29,11 +38,12 @@ func LoadCampaignTable() ([]Campaign, error) {
 	return campaign, err
 }
 
-func (c *Campaign) CampaignValidation(tx *pop.Connection, id uuid.UUID) *validate.Errors {
+func (c *Campaign) CampaignValidation(tx *pop.Connection, id uuid.UUID, users int) *validate.Errors {
 
 	return validate.Validate(
 		&validators.StringIsPresent{Field: c.Name, Name: "Name", Message: "Name can't be blank"},
 		&validators.TimeAfterTime{FirstName: "EndDate", FirstTime: c.EndDate, SecondName: "StartDate", SecondTime: c.StartDate, Message: "End Date needs to be after Start Date"},
+		&validators.IntIsPresent{Field: users, Name: "NoUserSelected", Message: "Please select at least one user"},
 
 		&validators.FuncValidator{
 			Field:   c.Name,

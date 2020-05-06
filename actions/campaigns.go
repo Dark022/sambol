@@ -23,9 +23,14 @@ func ListCampaign(c buffalo.Context) error {
 func NewCampaign(c buffalo.Context) error {
 	today, tomorrow := models.TodayTomorrow()
 	campaign := models.Campaign{}
+	users, err := models.LoadUserTable()
+	if err != nil {
+		return err
+	}
 	c.Set("campaign", campaign)
 	c.Set("today", today)
 	c.Set("tomorrow", tomorrow)
+	c.Set("users", users)
 
 	return c.Render(http.StatusOK, r.HTML("campaigns/new.plush.html"))
 }
@@ -33,24 +38,46 @@ func NewCampaign(c buffalo.Context) error {
 func SaveCampaign(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	campaign := models.Campaign{}
+	campaignUser := models.CampaignUsers{}
+	users, err := models.LoadUserTable()
+	if err != nil {
+		return err
+	}
+
+	UsersID := struct {
+		UsersID []uuid.UUID
+	}{}
 
 	if err := c.Bind(&campaign); err != nil {
 		return err
 	}
 
+	if err := c.Bind(&UsersID); err != nil {
+		return err
+	}
+
 	//Validate if inputs are empty and if name is already registered
-	if errors := campaign.CampaignValidation(tx, uuid.Nil); errors.HasAny() {
+	if errors := campaign.CampaignValidation(tx, uuid.Nil, len(UsersID.UsersID)); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
 		c.Set("today", campaign.StartDate)
 		c.Set("tomorrow", campaign.EndDate)
-
+		c.Set("users", users)
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("campaigns/new.plush.html"))
 	}
 
 	//Create table row
 	if err := tx.Create(&campaign); err != nil {
 		return err
+	}
+
+	for _, ids := range UsersID.UsersID {
+		campaignUser.UserID = ids
+		campaignUser.CampaignID = campaign.ID
+		if err := tx.Create(&campaignUser); err != nil {
+			return err
+		}
+		campaignUser = models.CampaignUsers{}
 	}
 
 	return c.Redirect(http.StatusSeeOther, "/campaign")
@@ -116,7 +143,7 @@ func UpdateCampaign(c buffalo.Context) error {
 	}
 	today, _ := models.TodayTomorrow()
 	//Validate if inputs are empty and if title is already registered
-	if errors := campaignForm.CampaignValidation(tx, id); errors.HasAny() {
+	if errors := campaignForm.CampaignValidation(tx, id, 1); errors.HasAny() {
 		c.Set("campaign", campaign)
 		c.Set("errors", errors)
 		c.Set("today", today)

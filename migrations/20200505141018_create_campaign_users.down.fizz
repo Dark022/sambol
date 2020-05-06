@@ -1,0 +1,1 @@
+drop_table("campaign_users")
