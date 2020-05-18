@@ -92,13 +92,13 @@ func init() {
 				var str strings.Builder
 				categories := models.SearchCategories(id)
 				for i := range categories {
-					if i == len(categories)-1 {
-						str.WriteString(categories[i])
-					}
-					str.WriteString(categories[i] + ",")
+					str.WriteString(categories[i] + " ")
 				}
-
-				return str.String()
+				strCategories := str.String()
+				strCategories = strings.TrimSpace(strCategories)
+				arrCtg := strings.Split(strCategories, " ")
+				strCategories = strings.Join(arrCtg, ",")
+				return strCategories
 			},
 			// for non-bootstrap form helpers uncomment the lines
 			// below and import "github.com/gobuffalo/helpers/forms"
