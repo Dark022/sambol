@@ -1,28 +1,58 @@
-<section class="container mt-5">
-    <div class="mx-auto temp-form card shadow">
-        <div class="card-header">
-          Edit Template
-        </div>
-        <div class="card-body pb-4">
-          <%= form_for(template, {action: editTemplateSavePath({template_id: template.ID}), method: "PUT", class: "pb-4"}) { %>
-            <div class="row align-items-center">
-              <div class="col-8">
-                  <%= f.InputTag("Title", {placeholder: "Title"}) %>
-              </div>
-              <div class="col">
-                <%= f.CheckboxTag("Active", {class: "mt-5", unchecked: false}) %>     
-              </div>
-              <div class="col">
-                <%= f.CheckboxTag("Private", {class: "mt-5", unchecked: false}) %>   
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                  <%= f.TextArea("Content", {placeholder: "Content...", rows: "5", maxlength: "250"}) %>
-              </div>
-            </div>
-            <input type="submit" value="Save" class="btn btn-dark w-100">
-          <% } %>
-        </div>
+<%= form_for(template, {action: editTemplateSavePath({template_id: template.ID}), method: "PUT", class: "pb-4"}) { %>
+  <div class="d-flex mt-5 mb-3 w-100 align-items-center">
+      <h4 class="text-as mt-1">Edit template</h4>
+    <div class="onoffswitchP ml-2 mt-2">
+      <%= if (template.Private) { %>
+        <input type="checkbox" name="Private" class="onoffswitchP-checkbox" id="onoffswitchP" checked>
+      <% } else { %>
+        <input type="checkbox" name="Private" class="onoffswitchP-checkbox" id="onoffswitchP">
+      <% } %>  
+      <label class="onoffswitchP-label" for="onoffswitchP">
+        <span class="onoffswitchP-inner"></span>
+        <span class="onoffswitchP-switch"></span>
+      </label>
+    </div>
+    <div class="onoffswitchA ml-2 mr-auto mt-2">
+      <%= if (template.Active) { %>
+        <input type="checkbox" name="Active" class="onoffswitchA-checkbox" id="onoffswitchA" checked>
+      <% } else { %>
+        <input type="checkbox" name="Active" class="onoffswitchA-checkbox" id="onoffswitchA">
+      <% } %>
+      <label class="onoffswitchA-label" for="onoffswitchA">
+        <span class="onoffswitchA-inner"></span>
+        <span class="onoffswitchA-switch"></span>
+      </label>
+    </div>
+    <a href="/template/" class="btn btn-white text-gr mr-1">Cancel</a>
+    <input type="submit" value="Edit template" class="btn btn-primary float-right text-white">
+  </div>
+  <div class="temp-form pt-3">
+    <div class="temp-border-as text-gr h5 px-3">Email</div>
+    <div class="row align-items-center px-3">
+      <div class="col-12">
+        <%= f.InputTag("Title", {class: "", placeholder: "Title..."}) %>
       </div>
-</section>
+    </div>
+    <div class="row px-3">
+      <div class="col">
+        <%= f.InputTag("Subject", {placeholder: "Subject..."}) %>
+      </div>
+      <div class="col">
+        <%= f.InputTag("SenderName", {placeholder: "Sender Name..."}) %>
+      </div>
+    </div>
+    <div class="row px-3">
+      <div class="col">
+        <%= f.SelectTag("Owner", {options: optionUsers()}) %>
+      </div>
+      <div class="col">
+        <%= f.InputTag("Categories", {placeholder: "Select Categories", value: getFormTemplateCategories(template.ID)}) %>
+      </div>
+    </div>
+    <div class="row px-3">
+      <div class="col">
+        <%= f.TextArea("Content", {placeholder: "Content...", rows: "5", maxlength: "250"}) %>
+      </div>
+    </div>
+  </div>
+  <% } %>

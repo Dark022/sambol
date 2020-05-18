@@ -1,16 +1,16 @@
 <header class="mt-5 bg-white py-3">
         <div class="d-flex align-items-center mb-3">
             <div class="h5 text-gr temp-border-as pl-3">Templates (<%= getTotalTemplates() %>)</div>
-            <input type="text" placeholder="&#xf002; Search Templates" class="mr-auto form-control search">
+            <input type="text" placeholder="Search Templates" class="ml-3 mr-auto form-control search" id="search">
             <a href="/template/new" id="addTask" class="btn bg-as text-white font-weight-light mr-3 btn-sm">New Template</a>
         </div>
         <div class="d-flex ml-3 font-weight-light mb-5">
-            <a id="allTemplates" class="all-pp-1 d-flex pb-3" href="/template">All templates</a>
-            <a id="publicTemplates" class="all-pp-2 d-flex pb-3" href="<%= templatePath({private: "false"}) %>">Public</a>
-            <a id="privateTemplates" class="all-pp-3 d-flex pb-3" href="<%= templatePath({private: "true"}) %>">Private</a>
+            <a id="allTemplates" class="all-pp-1 <%= current %> d-flex pb-3" href="/template">All templates</a>
+            <a id="publicTemplates" class="all-pp-2 <%= current2 %> d-flex pb-3" href="<%= templatePath({private: "false"}) %>">Public</a>
+            <a id="privateTemplates" class="all-pp-2 <%= current3 %> d-flex pb-3" href="<%= templatePath({private: "true"}) %>">Private</a>
         </div>
         <div class="table-responsive px-3">
-            <table class="table" id="toDoTable">
+            <table class="table" id="templateTable">
                 <thead class="bg-white text-gr">
                     <tr>
                         <th scope="col">Template Name</th>

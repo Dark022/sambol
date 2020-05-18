@@ -20,6 +20,9 @@ func ListTemplate(c buffalo.Context) error {
 			return err
 		}
 		c.Set("templates", templates)
+		c.Set("current", "")
+		c.Set("current2", "")
+		c.Set("current3", "current-link")
 		return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
 	}
 
@@ -29,6 +32,9 @@ func ListTemplate(c buffalo.Context) error {
 			return err
 		}
 		c.Set("templates", templates)
+		c.Set("current", "")
+		c.Set("current2", "current-link")
+		c.Set("current3", "")
 		return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
 	}
 
@@ -37,6 +43,9 @@ func ListTemplate(c buffalo.Context) error {
 		return err
 	}
 	c.Set("templates", templates)
+	c.Set("current", "current-link")
+	c.Set("current2", "")
+	c.Set("current3", "")
 	return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
 }
 

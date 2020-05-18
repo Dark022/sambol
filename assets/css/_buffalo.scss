@@ -339,10 +339,10 @@ td{
 }
 
 .all-pp-1{
-  color: #0070df;
+  color: lightgray;
   width: 120px;
   font-size: 15px;
-  border-bottom: solid 1px #0070df;
+  border-bottom: solid 1px lightgray;
   justify-content: center;
   text-decoration: none !important;
 }
@@ -356,20 +356,16 @@ td{
   text-decoration: none !important;
 }
 
-.all-pp-3{
-  color: lightgray;
-  width: 100px;
-  font-size: 15px;
-  width: 100px;
-  border-bottom: solid 1px lightgray;
-  justify-content: center;
-  text-decoration: none !important;
-}
 
 .search{
   width: 200px;
   border: none;
   border-bottom: solid 1px lightgray;
   border-radius: 0px;
-  font-family: 'Helvetica', FontAwesome, sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.current-link{
+  color: #0070df;
+  border-bottom: solid 1px #0070df;
 }

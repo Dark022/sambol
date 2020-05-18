@@ -109,7 +109,6 @@ func DeleteCampaing(c buffalo.Context) error {
 
 func EditCampaign(c buffalo.Context) error {
 	today, _ := models.TodayTomorrow()
-
 	id, err := uuid.FromString(c.Param("campaign_id"))
 	if err != nil {
 		return err

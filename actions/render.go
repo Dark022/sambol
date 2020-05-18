@@ -80,9 +80,22 @@ func init() {
 			"getTemplateCategories": func(id uuid.UUID) string {
 				var str strings.Builder
 				categories := models.SearchCategories(id)
-
+				fmt.Println(categories)
 				for i := range categories {
 					str.WriteString(categories[i] + " ")
+				}
+
+				return str.String()
+			},
+
+			"getFormTemplateCategories": func(id uuid.UUID) string {
+				var str strings.Builder
+				categories := models.SearchCategories(id)
+				for i := range categories {
+					if i == len(categories)-1 {
+						str.WriteString(categories[i])
+					}
+					str.WriteString(categories[i] + ",")
 				}
 
 				return str.String()
