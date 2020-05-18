@@ -1,0 +1,7 @@
+create_table("template_categories") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("template_id", "uuid", {})
+	t.Column("category_id", "uuid", {})
+	t.ForeignKey("template_id", {"templates": ["id"]}, {"on_delete": "cascade"})
+	t.ForeignKey("category_id", {"categories": ["id"]}, {"on_delete": "cascade"})
+}

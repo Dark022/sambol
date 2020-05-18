@@ -4,6 +4,7 @@ require("@fortawesome/fontawesome-free/js/all.js");
 
 $(() => {
     const saveCampaignBtn = document.getElementById("saveCampaign")
+
     $(saveCampaignBtn).click(function(){
         const checkboxs = $('input[type="checkbox"]');
         checkboxs.each(function(){
@@ -11,6 +12,6 @@ $(() => {
                 $(this).parent().parent().next().remove();     
             }
         });
-    });  
+    });
 });
 

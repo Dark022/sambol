@@ -1,25 +1,11 @@
 package models
 
 import (
-	"time"
-
 	"github.com/gobuffalo/pop/v5"
 	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 )
-
-// Template is the struct to represent an email template
-type Template struct {
-	ID      uuid.UUID `json:"id" db:"id"`
-	Title   string    `json:"title" db:"title"`
-	Content string    `json:"content" db:"content"`
-	Active  bool      `json:"active" db:"active"`
-	Private bool      `json:"private" db:"private"`
-
-	CreatedAt  time.Time `json:"created_at" db:"created_at"`
-	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
-}
 
 func LoadTable() ([]Template, error) {
 	templates := []Template{}
@@ -28,10 +14,26 @@ func LoadTable() ([]Template, error) {
 	return templates, err
 }
 
+func LoadPublicTemplateTable() ([]Template, error) {
+	templates := []Template{}
+	err := DB.Where("private = ?", false).All(&templates)
+
+	return templates, err
+}
+
+func LoadPrivateTemplateTable() ([]Template, error) {
+	templates := []Template{}
+	err := DB.Where("private = ?", true).All(&templates)
+
+	return templates, err
+}
+
 func (tmp *Template) ViewValidation(tx *pop.Connection, id uuid.UUID) *validate.Errors {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: tmp.Title, Name: "Title", Message: "Title can't be blank"},
 		&validators.StringIsPresent{Field: tmp.Content, Name: "Content", Message: "Content can't be blank"},
+		&validators.StringIsPresent{Field: tmp.Subject, Name: "Subject", Message: "Subject can't be blank"},
+		&validators.StringIsPresent{Field: tmp.SenderName, Name: "SenderName", Message: "Sender name can't be blank"},
 
 		&validators.FuncValidator{
 			Field:   tmp.Title,
@@ -60,4 +62,20 @@ func DeleteRow(id uuid.UUID) error {
 	err := DB.Destroy(template)
 
 	return err
+}
+
+func SearchCategories(id uuid.UUID) map[int]string {
+	category := []Categories{}
+	templateCategories := []TemplateCategories{}
+
+	DB.Where("template_id = ?", id).All(&templateCategories)
+
+	categories := make(map[int]string, len(templateCategories))
+
+	for i := range templateCategories {
+		DB.Where("id = ?", templateCategories[i].CategoryID).All(&category)
+		categories[i] = category[i].Name
+	}
+
+	return categories
 }

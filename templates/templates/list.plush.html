@@ -1,28 +1,74 @@
-<header>
-    <div class="container mt-3 px-5">
-        
-        <a href="/template/new" id="addTask" class="btn btn-dark text-white float-right font-weight-light mb-3 btn-lg">Add Template</a>
-        <div class="table-responsive">
-            <table class="table table-striped" id="toDoTable">
-                <thead class="thead-dark ">
+<header class="mt-5 bg-white py-3">
+        <div class="d-flex align-items-center mb-3">
+            <div class="h5 text-gr temp-border-as pl-3">Templates (<%= getTotalTemplates() %>)</div>
+            <input type="text" placeholder="&#xf002; Search Templates" class="mr-auto form-control search">
+            <a href="/template/new" id="addTask" class="btn bg-as text-white font-weight-light mr-3 btn-sm">New Template</a>
+        </div>
+        <div class="d-flex ml-3 font-weight-light mb-5">
+            <a id="allTemplates" class="all-pp-1 d-flex pb-3" href="/template">All templates</a>
+            <a id="publicTemplates" class="all-pp-2 d-flex pb-3" href="<%= templatePath({private: "false"}) %>">Public</a>
+            <a id="privateTemplates" class="all-pp-3 d-flex pb-3" href="<%= templatePath({private: "true"}) %>">Private</a>
+        </div>
+        <div class="table-responsive px-3">
+            <table class="table" id="toDoTable">
+                <thead class="bg-white text-gr">
                     <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Content</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Private</th>
-                        <th scope="col"></th>
+                        <th scope="col">Template Name</th>
+                        <th scope="col">Owner</th>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Type</th>
+                        <th scope="col"><div></div></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="bg-white">
                     <%= for (template) in templates { %>
                         <tr>
-                            <td class="align-middle"><%= template.Title %></td>
-                            <td class="align-middle"><a href="<%= templateShowPath({template_id: template.ID}) %>">Content</a></td>
-                            <td class="align-middle"><%= template.Active %></td>
-                            <td class="align-middle"><%= template.Private %></td>
+                            <td class="align-middle text-as"><%= template.Title %></td>
+                            <td class="align-middle"><%= getTemplateOwner(template.Owner) %></td>
+                            <td class="align-middle"><%= getTemplateCategories(template.ID) %></td>
+                            <td class="align-middle">
+                                <%= if (template.Active) { %>
+                                    <div class="temp-pa d-flex align-items-center">
+                                        <i class="far fa-check-circle mr-1"></i>
+                                        <span>Active</span>
+                                    </div>
+                                <% } else { %>
+                                    <div class="temp-pi d-flex align-items-center">
+                                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                                        <span>Inactive</span>
+                                    </div>
+                                <% } %>
+                            </td>
+                            <td class="align-middle">                                                  
+                                <%= if (template.Private) { %>
+                                    <div class="temp-pi d-flex align-items-center">
+                                        <i class="fas fa-lock mr-1"></i>
+                                        <span>Private</span>
+                                    </div>
+                                <% } else { %>
+                                    <div class="temp-pa d-flex align-items-center">
+                                        <i class="fas fa-globe-americas mr-1"></i>
+                                        <span>Public</span>
+                                    </div>
+                                <% } %>
+                            </td>
                             <td>
-                                <a href="<%= templateDeletePath({template_id: template.ID}) %>" class="btn btn-danger h0" data-confirm="Are you sure?" data-method="DELETE">Delete</a>
-                                <a href="<%= editTemplatePath ({template_id: template.ID}) %>" class="btn btn-success h0">Edit</a>
+                                <div class="dropdown">
+                                    <button class="dots" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-h text-gr"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="<%= templateDeletePath({template_id: template.ID}) %>" data-confirm="Are you sure?" data-method="DELETE">
+                                            <i class="far fa-trash-alt"></i>
+                                            Delete
+                                        </a>
+                                        <a class="dropdown-item" href="<%= editTemplatePath ({template_id: template.ID}) %>">
+                                            <i class="far fa-edit"></i>
+                                            Edit
+                                        </a>
+                                    </div>
+                                  </div>
                             </td>
                         </tr>
                     <% } %>

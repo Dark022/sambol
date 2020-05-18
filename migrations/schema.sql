@@ -53,6 +53,20 @@ CREATE TABLE public.campaigns (
 ALTER TABLE public.campaigns OWNER TO postgres;
 
 --
+-- Name: categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categories (
+    id uuid NOT NULL,
+    name text NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.categories OWNER TO postgres;
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -62,6 +76,21 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO postgres;
+
+--
+-- Name: template_categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.template_categories (
+    id uuid NOT NULL,
+    template_id uuid NOT NULL,
+    category_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.template_categories OWNER TO postgres;
 
 --
 -- Name: templates; Type: TABLE; Schema: public; Owner: postgres
@@ -74,7 +103,10 @@ CREATE TABLE public.templates (
     active boolean DEFAULT false NOT NULL,
     private boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    subject character varying(255) NOT NULL,
+    sender_name character varying(255) NOT NULL,
+    owner uuid NOT NULL
 );
 
 
@@ -110,6 +142,22 @@ ALTER TABLE ONLY public.campaign_users
 
 ALTER TABLE ONLY public.campaigns
     ADD CONSTRAINT campaigns_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: template_categories template_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.template_categories
+    ADD CONSTRAINT template_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -149,6 +197,22 @@ ALTER TABLE ONLY public.campaign_users
 
 ALTER TABLE ONLY public.campaign_users
     ADD CONSTRAINT campaign_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: template_categories template_categories_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.template_categories
+    ADD CONSTRAINT template_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON DELETE CASCADE;
+
+
+--
+-- Name: template_categories template_categories_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.template_categories
+    ADD CONSTRAINT template_categories_template_id_fkey FOREIGN KEY (template_id) REFERENCES public.templates(id) ON DELETE CASCADE;
 
 
 --

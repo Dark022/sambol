@@ -1,0 +1,3 @@
+drop_column("templates", "subject")
+drop_column("templates", "sender_name")
+drop_column("templates", "owner")

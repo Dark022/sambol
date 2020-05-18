@@ -2,10 +2,12 @@ package actions
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/Dark022/sambol/models"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 )
 
@@ -34,6 +36,17 @@ func init() {
 				return options
 			},
 
+			"optionUsers": func() map[string]string {
+
+				users, _ := models.LoadUserTable()
+				options := make(map[string]string, len(users))
+
+				for _, user := range users {
+					options[user.FirstName+" "+user.LastName] = user.ID.String()
+				}
+				return options
+			},
+
 			"errorIdentifier": func(errors *validate.Errors, err string) bool {
 				for keys := range errors.Errors {
 					if keys == err {
@@ -45,6 +58,34 @@ func init() {
 
 			"userFullName": func(user models.User) string {
 				return fmt.Sprintf("%v %v", user.FirstName, user.LastName)
+			},
+
+			"getTotalTemplates": func() int {
+				var i int
+				templates, _ := models.LoadTable()
+
+				for i = range templates {
+					i++
+				}
+
+				return i
+			},
+
+			"getTemplateOwner": func(ownerID string) string {
+				ID, _ := uuid.FromString(ownerID)
+				user, _ := models.SearchUserID(ID)
+				return fmt.Sprintf("%v %v", user.FirstName, user.LastName)
+			},
+
+			"getTemplateCategories": func(id uuid.UUID) string {
+				var str strings.Builder
+				categories := models.SearchCategories(id)
+
+				for i := range categories {
+					str.WriteString(categories[i] + " ")
+				}
+
+				return str.String()
 			},
 			// for non-bootstrap form helpers uncomment the lines
 			// below and import "github.com/gobuffalo/helpers/forms"

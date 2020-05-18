@@ -12,6 +12,26 @@ import (
 var ID string
 
 func ListTemplate(c buffalo.Context) error {
+	private := c.Param("private")
+
+	if private == "true" {
+		templates, err := models.LoadPrivateTemplateTable()
+		if err != nil {
+			return err
+		}
+		c.Set("templates", templates)
+		return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
+	}
+
+	if private == "false" {
+		templates, err := models.LoadPublicTemplateTable()
+		if err != nil {
+			return err
+		}
+		c.Set("templates", templates)
+		return c.Render(http.StatusOK, r.HTML("templates/list.plush.html"))
+	}
+
 	templates, err := models.LoadTable()
 	if err != nil {
 		return err
@@ -30,7 +50,15 @@ func SaveTemplate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	template := models.Template{}
 
+	categories := struct {
+		Categories string
+	}{}
+
 	if err := c.Bind(&template); err != nil {
+		return err
+	}
+
+	if err := c.Bind(&categories); err != nil {
 		return err
 	}
 
@@ -44,6 +72,10 @@ func SaveTemplate(c buffalo.Context) error {
 
 	//Create table row
 	if err := tx.Create(&template); err != nil {
+		return err
+	}
+
+	if err := models.NewCategories(categories.Categories, tx, template.ID); err != nil {
 		return err
 	}
 

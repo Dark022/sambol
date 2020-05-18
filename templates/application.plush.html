@@ -7,22 +7,38 @@
     <%= stylesheetTag("application.css") %>
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
-    <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+    <link rel="icon" href="<%= assetPath("images/symbol_logo_icon.svg") %>">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
-        <nav class="navbar navbar-dark bg-dark">
-          <div class="container">
-              <a class="navbar-brand" href="/">SamBol</a>
-              <div class="row text-white">
-                <a class="nav-link" href="/template/">Templates</a>
-                <a class="nav-link" href="/campaign/">Campaigns</a>
-                <a class="nav-link" href="/user/">User</a>
-              </div>              
-          </div>         
+        <nav class="navbar fixed-top navbar-dark bg-as">
+              <a class="navbar-brand" href="/">
+                <img src="<%= assetPath("images/symbol_logo_icon.svg") %>" width="30" height="30">
+                SamBol
+              </a>                    
         </nav>
     </header>
 
+    <div class="sidebar">
+      <a class="nav-link" href="/campaign/">
+        <i class="far fa-dot-circle"></i>
+        Campaigns
+      </a>
+      <a class="nav-link" href="/user/">
+        <i class="fas fa-user-friends"></i>
+        User
+      </a>
+      <a href="#librarySubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-book"></i>
+        Library
+      </a>
+      <ul class="collapse list-unstyled" id="librarySubMenu">
+        <li>
+            <a class="sub-link" href="/template/">Phishing Templates</a>
+        </li>
+      </ul>
+   </div>
     <div class="container">
       <%= partial("flash.html") %>
       <%= yield %>

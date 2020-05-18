@@ -1,23 +1,11 @@
 package models
 
 import (
-	"time"
-
 	"github.com/gobuffalo/pop/v5"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
 )
-
-type User struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	FirstName string    `json:"firstname" db:"firstname"`
-	LastName  string    `json:"lastname" db:"lastname"`
-	Email     string    `json:"email" db:"email"`
-
-	CreatedAt  time.Time `json:"created_at" db:"created_at"`
-	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
-}
 
 func LoadUserTable() ([]User, error) {
 	users := []User{}
