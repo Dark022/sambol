@@ -24,7 +24,7 @@
                 <tbody id="tableBody" class="bg-white">
                     <%= for (template) in templates { %>
                         <tr>
-                            <td class="align-middle text-as"><%= template.Title %></td>
+                            <td class="align-middle text-as"><a href="<%= templateShowPath({template_id: template.ID})  %>"><%= template.Title %></a></td>
                             <td class="align-middle"><%= getTemplateOwner(template.Owner) %></td>
                             <td class="align-middle"><%= getTemplateCategories(template.ID) %></td>
                             <td class="align-middle">
