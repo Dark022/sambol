@@ -15,86 +15,37 @@
             </thead>
             <tbody id="tableBody" class="bg-white">
                 <%= for (user) in users { %>
-                    <tr>
-                        <td class="align-middle text-as"><%= user.FirstName %></td>
-                        <td class="align-middle"><%= user.LastName %></td>
-                        <td class="align-middle"><%= user.Email %></td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="dots" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-h text-gr"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="<%= userDeletePath ({user_id: user.ID}) %>" data-confirm="Are you sure?" data-method="DELETE">
-                                        <i class="far fa-trash-alt"></i>
-                                        Delete
-                                    </a>
-                                    <a class="dropdown-item" href="<%= editUserPath ({user_id: user.ID}) %>">
-                                        <i class="far fa-edit"></i>
-                                        Edit
-                                    </a>
-                                    <a class="dropdown-item" href="<%= userShowPath  ({user_id: user.ID}) %>">
-                                        <i class="fas fa-search"></i>
-                                        Show
-                                    </a>
-                                </div>
-                              </div>
-                        </td>
-                    </tr>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
-</div>
-</header>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<header class="mt-5">        
-    <a href="/user/new" id="addTask" class="btn bg-as text-white float-right font-weight-light mb-3 btn-lg">Add User</a>
-    <div class="table-responsive">
-        <table class="table table-striped" id="toDoTable">
-            <thead class="bg-as text-white">
                 <tr>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col"></th>
+                    <td class="align-middle text-as"><%= user.FirstName %></td>
+                    <td class="align-middle"><%= user.LastName %></td>
+                    <td class="align-middle"><%= user.Email %></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="dots" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h text-gr"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="<%= userDeletePath ({user_id: user.ID}) %>"
+                                    data-confirm="Are you sure?" data-method="DELETE">
+                                    <i class="far fa-trash-alt"></i>
+                                    Delete
+                                </a>
+                                <a class="dropdown-item" href="<%= editUserPath ({user_id: user.ID}) %>">
+                                    <i class="far fa-edit"></i>
+                                    Edit
+                                </a>
+                                <a class="dropdown-item" href="<%= userShowPath  ({user_id: user.ID}) %>">
+                                    <i class="fas fa-search"></i>
+                                    Show
+                                </a>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
-            </thead>
-            <tbody id="tableBody" class="bg-white">
-                <%= for (user) in users { %>
-                    <tr>
-                        <td class="align-middle"><%= user.FirstName %></td>
-                        <td class="align-middle"><%= user.LastName %></td>
-                        <td class="align-middle"><%= user.Email %></td>
-                        <td>
-                            <a href="<%= userDeletePath ({user_id: user.ID}) %>" class="btn btn-danger h0" data-confirm="Are you sure?" data-method="DELETE">Delete</a>
-                            <a href="<%= editUserPath ({user_id: user.ID}) %>" class="btn btn-success h0">Edit</a>
-                            <a href="<%= userShowPath  ({user_id: user.ID}) %>" class="btn btn-primary h0">Show</a>
-                        </td>
-                    </tr>
                 <% } %>
             </tbody>
         </table>
     </div>
-</header> 
--->
+    </div>
+</header>
