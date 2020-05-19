@@ -1,46 +1,40 @@
-<section class="container mt-5">
-  <div class="mx-auto temp-form card shadow">
-    <div class="card-header">
-      New Campaign
+<%= form_for(campaign, {action: campaignSavePath(), method: "POST", class: "pb-4"}) { %>
+<div class="d-flex mt-5 mb-3 w-100 align-items-center">
+  <h4 class="text-as mt-1 mr-auto">New campaign</h4>
+  <a href="/campaign/" class="btn btn-white text-gr mr-2">Cancel</a>
+  <input type="submit" value="Create campaign" class="btn btn-primary text-white">
+</div>
+<div class="temp-form pt-3">
+  <div class="temp-border-as text-gr h5 px-3">Campaign</div>
+  <div class="row align-items-center px-3">
+    <div class="col-12">
+      <%= f.InputTag("Name", {placeholder: "Name..."}) %>
     </div>
-    <%= form_for(campaign, {action: campaignSavePath (), method: "POST", class: "pb-4"}) { %>
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col-12">
-          <%= f.InputTag("Name", {placeholder: "Name..."}) %>
-        </div>
-        <div class="col-6">
-          <%= f.InputTag("StartDate", {type: "date", min: today, value: today}) %>
-        </div>
-        <div class="col-6">
-          <%= f.InputTag("EndDate", {type: "date", value: tomorrow}) %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <%= f.SelectTag("TemplateID", {options: options()}) %>
-        </div>
-      </div>
-      
+    <div class="col-6">
+      <%= f.InputTag("StartDate", {type: "date", min: today, value: today}) %>
     </div>
-    <div class="card-header bg-dark text-white">
-      Users:
+    <div class="col-6">
+      <%= f.InputTag("EndDate", {type: "date", value: tomorrow}) %>
     </div>
-    <div class="card-body">
-      <%= if (errors && errorIdentifier(errors, "no_user_selected")) { %>
-        <div class="bad-user-request border border-danger rounded text-center text-danger">Please select at least one user</div>
-      <% } %>
-      <div class="row">
-        <%= for (user) in users { %>
-          <div class="col-12">
-            <%= f.CheckboxTag("UserCheck", {label: (userFullName(user))}) %>
-            <%= f.InputTag("UsersID", {type: "hidden", value: user.ID}) %>
-          </div>
-        <% } %>
-      </div>
-      <input type="submit" value="Save" id="saveCampaign" class="btn btn-dark w-100">
-    </div> 
   </div>
-  
+  <div class="row px-3">
+    <div class="col">
+      <%= f.SelectTag("TemplateID", {options: options()}) %>
+    </div>
+  </div>
+  <div class="temp-border-as text-gr h5 px-3 mb-4">Select users</div>
+  <div>
+    <%= if (errors && errorIdentifier(errors, "no_user_selected")) { %>
+    <div class="bad-user-request border border-danger rounded text-center text-danger">Please select at least one user
+    </div>
+    <% } %>
+    <div class="row px-3">
+      <%= for (user) in users { %>
+      <div class="col-12">
+        <%= f.CheckboxTag("UserCheck", {label: (userFullName(user))}) %>
+        <%= f.InputTag("UsersID", {type: "hidden", value: user.ID}) %>
+      </div>
+      <% } %>
+    </div>
+  </div>
   <% } %>
-</section>
