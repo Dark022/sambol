@@ -138,6 +138,14 @@ func UpdateTemplate(c buffalo.Context) error {
 		return err
 	}
 
+	categories := struct {
+		Categories string
+	}{}
+
+	if err := c.Bind(&categories); err != nil {
+		return err
+	}
+
 	templateForm := models.Template{}
 
 	if err := c.Bind(&templateForm); err != nil {
@@ -155,6 +163,10 @@ func UpdateTemplate(c buffalo.Context) error {
 	templateForm.ID = template.ID
 
 	if err := tx.Update(&templateForm); err != nil {
+		return err
+	}
+
+	if err := models.UpdateCategories(categories.Categories, tx, template.ID); err != nil {
 		return err
 	}
 
