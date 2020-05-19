@@ -1,25 +1,69 @@
-<section class="container mt-5">
-    <div class="mx-auto temp-form card shadow">
-        <div class="card-header">
-            <h4><%= template.Title %></h4>
-        </div>
-        <div class="card-body">
-            <div class="mb-5"><%= template.Content %></div>
+
+<div class="d-flex mt-5 mb-3 w-100 align-items-center justify-content-end">
+    <a href="<%= templateDeletePath({template_id: template.ID}) %>" data-confirm="Are you sure?" data-method="DELETE" class="btn btn-danger text-white mr-1">Delete</a>
+    <a href="<%= editTemplatePath ({template_id: template.ID}) %>" class="btn btn-primary text-white">Edit Template</a>
+</div>
+<div class="temp-form py-3 pr-3">
+    <div class="d-flex align-items-center">
+        <div class="temp-border-as text-gr h5 px-3 mr-auto"><%= template.Title %></div>
+        <div class="d-flex align-items-center">
             <%= if (template.Active) { %>
-                <span class="text-success mr-5">Active: <%= template.Active %></span>
+                <div class="temp-pa d-flex align-items-center mb-1">
+                    <i class="far fa-check-circle mr-1"></i>
+                    <span>Active</span>
+                </div>
             <% } else { %>
-                <span class="text-danger mr-5"> Active: <%= template.Active %></span>
+                <div class="temp-pi d-flex align-items-center mb-1">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                    <span>Inactive</span>
+                </div>
             <% } %>
 
             <%= if (template.Private) { %>
-                <span class="text-success">Private: <%= template.Private %></span>
+                <div class="temp-pi d-flex align-items-center ml-2 mb-1">
+                    <i class="fas fa-lock mr-1"></i>
+                    <span>Private</span>
+                </div>
             <% } else { %>
-                <span class="text-danger"> Private: <%= template.Private %></span>
+                <div class="temp-pa d-flex align-items-center ml-2 mb-1">
+                    <i class="fas fa-globe-americas mr-1"></i>
+                    <span>Public</span>
+                </div>
             <% } %>
         </div>
-        <div class="card-footer text-center">
-            <a href="/template" class="btn btn-dark w-50">GO BACK</a>
-        </div>
     </div>
-    
-</section>
+    <div class="ml-3">
+        <div class="row align-items-center mt-5 info-bar-show w-100 mx-auto pt-3 pb-4 text-gr">
+            <div class="col">
+                <div>Avaliable for:</div>
+                <div class="font-weight-bold">Symbol Security</div>
+            </div>
+            <div class="col border-gr">
+                <div>Emails sent:</div>
+                <div class="font-weight-bold">0</div>
+            </div>
+            <div class="col border-gr">
+                <div>Categories:</div>
+                <div>
+                    <%= if (getTemplateCategories(template.ID) == "") { %>
+                        <div>No Categories</div>
+                    <% } else { %>
+                        <div><%= getTemplateCategories(template.ID) %></div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="text-as my-3">Email</div>
+        <div class="text-gr">
+            <div>Subject:</div>
+            <div class="font-weight-bold"><%= template.Subject %></div>
+        </div>
+        <div class="text-gr my-3">
+            <div>Sender Name:</div>
+            <div class="font-weight-bold"><%= template.SenderName %></div>
+        </div>
+        <div class="template-content d-flex justify-content-center">
+            <iframe srcdoc="<%= template.Content %>" ></iframe>
+        </div>
+    </div>   
+</div>
