@@ -1,31 +1,50 @@
-<header class="mt-5">        
-        <a href="/campaign/new" id="addTask" class="btn bg-as text-white float-right font-weight-light mb-3 btn-lg">Add Campaign</a>
-        <div class="table-responsive">
-            <table class="table table-striped" id="toDoTable">
-                <thead class="bg-as text-white">
+<header class="mt-5 bg-white py-3">
+    <div class="d-flex align-items-center mb-3">
+        <div class="h5 text-gr temp-border-as pl-3 mr-auto">Campaigns</div>
+        <a href="/campaign/new" id="addCampaign" class="btn bg-as text-white font-weight-light mr-3 btn-sm">New Campaign</a>
+    </div>
+    <div class="table-responsive px-3">
+        <table class="table" id="userTable">
+            <thead class="bg-white text-gr">
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Template ID</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
                         <th scope="col"></th>
                     </tr>
-                </thead>
-                <tbody id="tableBody" class="bg-white">
-                    <%= for (campaign) in campaigns { %>
-                        <tr>
-                            <td class="align-middle"><%= campaign.Name %></td>
-                            <td class="align-middle"><a href="<%= campaignShowPath({campaign_id: campaign.ID}) %>">Show Campaign</a></td>
-                            <td class="align-middle"><%= campaign.StartDate %></td>
-                            <td class="align-middle"><%= campaign.EndDate %></td>
-                            <td>
-                                <a href="<%= campaignDeletePath({campaign_id: campaign.ID}) %>" class="btn btn-danger h0" data-confirm="Are you sure?" data-method="DELETE">Delete</a>
-                                <a href="<%= editCampaignPath({campaign_id: campaign.ID}) %>" class="btn btn-success h0">Edit</a>
-                            </td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
+            </thead>
+            <tbody id="tableBody" class="bg-white">
+                <%= for (campaign) in campaigns { %>
+                <tr>
+                    <td class="align-middle text-as"><%= campaign.Name %></td>
+                    <td class="align-middle"><%= campaign.StartDate %></td>
+                    <td class="align-middle"><%= campaign.EndDate %></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="dots" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h text-gr"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="<%= campaignDeletePath({campaign_id: campaign.ID}) %>" data-confirm="Are you sure?" data-method="DELETE">
+                                    <i class="far fa-trash-alt"></i>
+                                    Delete
+                                </a>
+                                <a class="dropdown-item" href="<%= editCampaignPath({campaign_id: campaign.ID}) %>">
+                                    <i class="far fa-edit"></i>
+                                    Edit
+                                </a>
+                                <a class="dropdown-item" href="<%= campaignShowPath({campaign_id: campaign.ID}) %>">
+                                    <i class="fas fa-search"></i>
+                                    Show
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
     </div>
 </header>
