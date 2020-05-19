@@ -1,14 +1,11 @@
-<section class="container mt-5">
-    <div class="mx-auto temp-form card shadow">
-        <div class="card-header">
-            <h4><%= user.FirstName %> <%= user.LastName %></h4>
-        </div>
-        <div class="card-body">
-            <div><%= user.Email %></div>
-        </div>
-        <div class="card-footer text-center">
-            <a href="/user" class="btn btn-dark w-50">GO BACK</a>
-        </div>
-    </div>
-    
-</section>
+<div class="d-flex mt-5 mb-3 w-100 align-items-center">
+    <h4 class="text-as mt-1 mr-auto">User</h4>
+    <a href="<%= userDeletePath({user_id: user.ID}) %>" data-confirm="Are you sure?" data-method="DELETE" class="btn btn-danger text-white mr-1">Delete</a>
+    <a href="<%= editUserPath({user_id: user.ID}) %>" class="btn btn-primary text-white">Edit Template</a>
+  </div>
+  <div class="temp-form pt-3 pb-2">
+    <div class="temp-border-as text-gr h5 px-3">
+        <div><%= userFullName(user) %></div>
+        <div>Email: <%= user.Email %></div>
+    </div>   
+</div>
