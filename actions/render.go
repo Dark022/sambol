@@ -80,7 +80,6 @@ func init() {
 			"getTemplateCategories": func(id uuid.UUID) string {
 				var str strings.Builder
 				categories := models.SearchCategories(id)
-				fmt.Println(categories)
 				for i := range categories {
 					str.WriteString(categories[i] + " ")
 				}
