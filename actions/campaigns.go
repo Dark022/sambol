@@ -27,10 +27,14 @@ func NewCampaign(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+	UsersID := struct {
+		UsersID []uuid.UUID
+	}{}
 	c.Set("campaign", campaign)
 	c.Set("today", today)
 	c.Set("tomorrow", tomorrow)
 	c.Set("users", users)
+	c.Set("UsersID", UsersID)
 
 	return c.Render(http.StatusOK, r.HTML("campaigns/new.plush.html"))
 }
@@ -63,6 +67,7 @@ func SaveCampaign(c buffalo.Context) error {
 		c.Set("today", campaign.StartDate)
 		c.Set("tomorrow", campaign.EndDate)
 		c.Set("users", users)
+		c.Set("UsersID", UsersID)
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("campaigns/new.plush.html"))
 	}
 
@@ -92,8 +97,13 @@ func ShowCampaign(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+	users, err := models.LoadCampaignUsers(id)
+	if err != nil {
+		return err
+	}
 
 	c.Set("campaign", campaign)
+	c.Set("users", users)
 	return c.Render(http.StatusOK, r.HTML("campaigns/show.plush.html"))
 }
 
