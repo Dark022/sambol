@@ -16,7 +16,7 @@ $(() => {
 
     $("#search").keyup(function() {
         let filter = this.value.toUpperCase();
-        const templatetable = document.getElementById("templateTable");
+        const templatetable = document.getElementById("table");
         const tr = templatetable.getElementsByTagName("tr");
 
         console.log(this, filter, tr)
