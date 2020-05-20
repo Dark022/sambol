@@ -71,6 +71,16 @@ func init() {
 				return i
 			},
 
+			"getTotalCampaignUsers": func(campaignUsers []models.User) int {
+				var i int
+
+				for i = range campaignUsers {
+					i++
+				}
+
+				return i
+			},
+
 			"getTemplateOwner": func(ownerID string) string {
 				ID, _ := uuid.FromString(ownerID)
 				user, _ := models.SearchUserID(ID)
