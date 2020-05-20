@@ -2,7 +2,7 @@
 <div class="d-flex mt-5 mb-3 w-100 align-items-center">
   <h4 class="text-as mt-1 mr-auto">New campaign</h4>
   <a href="/campaign/" class="btn btn-white text-gr mr-2">Cancel</a>
-  <input type="submit" value="Create campaign" class="btn btn-primary text-white">
+  <input type="submit" value="Create campaign" id="saveCampaign" class="btn btn-primary text-white">
 </div>
 <div class="temp-form pt-3">
   <div class="temp-border-as text-gr h5 px-3">Campaign</div>
@@ -31,7 +31,7 @@
     <div class="row px-3">
       <%= for (user) in users { %>
       <div class="col-12">
-        <%= f.CheckboxTag("UserCheck", {label: (userFullName(user))}) %>
+        <%= f.CheckboxTag("UserCheck", {label: (userFullName(user)), value: getCheckedUsers(UsersID, user.ID)}) %>
         <%= f.InputTag("UsersID", {type: "hidden", value: user.ID}) %>
       </div>
       <% } %>
