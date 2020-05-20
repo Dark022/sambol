@@ -17,6 +17,26 @@ func LoadCampaignTable() ([]Campaign, error) {
 	return campaign, err
 }
 
+func LoadCampaignUsers(id uuid.UUID) ([]User, error) {
+	var err error
+	campaignUsers := []CampaignUsers{}
+	users := []User{}
+
+	err = DB.Where("campaign_id = ?", id).All(&campaignUsers)
+	if err != nil {
+		return users, err
+	}
+
+	for i := range campaignUsers {
+		err = DB.Where("id = ?", campaignUsers[i].UserID).All(&users)
+		if err != nil {
+			return users, err
+		}
+	}
+
+	return users, err
+}
+
 func (c *Campaign) CampaignValidation(tx *pop.Connection, id uuid.UUID, users int) *validate.Errors {
 
 	return validate.Validate(
