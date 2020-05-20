@@ -52,6 +52,7 @@ func ListTemplate(c buffalo.Context) error {
 func NewTemplate(c buffalo.Context) error {
 	template := models.Template{}
 	c.Set("template", template)
+	c.Set("categories", "")
 	return c.Render(http.StatusOK, r.HTML("templates/new.plush.html"))
 }
 
@@ -74,6 +75,7 @@ func SaveTemplate(c buffalo.Context) error {
 	//Validate if inputs are empty and if title is already registered
 	if errors := template.ViewValidation(tx, uuid.Nil); errors.HasAny() {
 		c.Set("template", template)
+		c.Set("categories", categories.Categories)
 		c.Set("errors", errors)
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("templates/new.plush.html"))
