@@ -99,6 +99,15 @@ func init() {
 				strCategories = strings.Join(arrCtg, ",")
 				return strCategories
 			},
+
+			"getCheckedUsers": func(IDs struct{ UsersID []uuid.UUID }, id uuid.UUID) bool {
+				for i := range IDs.UsersID {
+					if id == IDs.UsersID[i] {
+						return true
+					}
+				}
+				return false
+			},
 			// for non-bootstrap form helpers uncomment the lines
 			// below and import "github.com/gobuffalo/helpers/forms"
 			// forms.FormKey:     forms.Form,
