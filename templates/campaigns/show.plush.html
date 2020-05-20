@@ -1,19 +1,37 @@
-<section class="container mt-5">
-    <div class="mx-auto temp-form card shadow">
-        <div class="card-header">
-            <h4><%= campaign.Name %></h4>
-        </div>
-        <div class="card-body">
-            <div class="mb-5">
-                <span class="mr-5"><%= campaign.StartDate %></span>
-                -
-                <span class="ml-5"><%= campaign.EndDate %></span>
-            </div>
-            <div>Template ID:<%= campaign.TemplateID %></div>
-        </div>
-        <div class="card-footer text-center">
-            <a href="/campaign" class="btn btn-dark w-50">GO BACK</a>
-        </div>
+<div class="d-flex mt-5 mb-3 w-100 align-items-center justify-content-end">
+    <a href="<%= campaignDeletePath({campaign_id: campaign.ID}) %>" data-confirm="Are you sure?" data-method="DELETE" class="btn btn-danger text-white mr-1">Delete</a>
+</div>
+<div class="temp-form p-3">
+    <div class="d-flex align-items-center">
+        <div class="text-gr">Opt in campaign</div>
+        <div class="text-gr">Created on: <%= campaign.CreatedAt %></div>
+    </div>   
+</div>
+
+<section class="mt-5 bg-white py-3">
+    <div class="d-flex align-items-center mb-3">
+        <div class="h5 text-gr temp-border-as pl-3">Users</div>
+        <input type="text" placeholder="Search Users" class="ml-3 form-control search" id="search">
     </div>
-    
+    <div class="table-responsive px-3">
+        <table class="table" id="table">
+            <thead class="bg-white text-gr">
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="bg-white">
+                <%= for (user) in users { %>
+                <tr>
+                    <td class="align-middle text-as"><%= user.FirstName %></td>
+                    <td class="align-middle"><%= user.LastName %></td>
+                    <td class="align-middle"><%= user.Email %></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    </div>
 </section>
