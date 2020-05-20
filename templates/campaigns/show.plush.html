@@ -2,15 +2,15 @@
     <a href="<%= campaignDeletePath({campaign_id: campaign.ID}) %>" data-confirm="Are you sure?" data-method="DELETE" class="btn btn-danger text-white mr-1">Delete</a>
 </div>
 <div class="temp-form p-3">
-    <div class="d-flex align-items-center">
+    <div>
         <div class="text-gr">Opt in campaign</div>
         <div class="text-gr">Created on: <%= campaign.CreatedAt %></div>
-    </div>   
+    </div>
 </div>
 
 <section class="mt-5 bg-white py-3">
     <div class="d-flex align-items-center mb-3">
-        <div class="h5 text-gr temp-border-as pl-3">Users</div>
+        <div class="h5 text-gr temp-border-as pl-3">Users (<%= getTotalCampaignUsers(users) %>)</div>
         <input type="text" placeholder="Search Users" class="ml-3 form-control search" id="search">
     </div>
     <div class="table-responsive px-3">
