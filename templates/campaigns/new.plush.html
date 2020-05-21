@@ -19,7 +19,7 @@
   </div>
   <div class="row px-3">
     <div class="col">
-      <%= f.SelectTag("TemplateID", {options: options()}) %>
+      <%= f.SelectTag("TemplateID", {options: options(), label: "Template"}) %>
     </div>
   </div>
   <div class="temp-border-as text-gr h5 px-3 mb-4">Select users</div>
@@ -28,13 +28,7 @@
     <div class="bad-user-request border border-danger rounded text-center text-danger">Please select at least one user
     </div>
     <% } %>
-    <div class="row px-3">
-      <%= for (user) in users { %>
-      <div class="col-12">
-        <%= f.CheckboxTag("UserCheck", {label: (userFullName(user)), value: getCheckedUsers(UsersID, user.ID)}) %>
-        <%= f.InputTag("UsersID", {type: "hidden", value: user.ID}) %>
-      </div>
-      <% } %>
+    <div class="row px-3"  id="userListing">
     </div>
   </div>
   <% } %>

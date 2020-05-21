@@ -81,9 +81,8 @@ func init() {
 				return i
 			},
 
-			"getTemplateOwner": func(ownerID string) string {
-				ID, _ := uuid.FromString(ownerID)
-				user, _ := models.SearchUserID(ID)
+			"getTemplateOwner": func(ownerID uuid.UUID) string {
+				user, _ := models.SearchUserID(ownerID)
 				return fmt.Sprintf("%v %v", user.FirstName, user.LastName)
 			},
 

@@ -15,7 +15,7 @@ type Template struct {
 	Private    bool      `json:"private" db:"private"`
 	Subject    string    `json:"subject" db:"subject"`
 	SenderName string    `json:"sender_name" db:"sender_name"`
-	Owner      string    `json:"owner" db:"owner"`
+	Owner      uuid.UUID `json:"owner" db:"owner"`
 
 	CreatedAt  time.Time `json:"created_at" db:"created_at"`
 	UpdataedAt time.Time `json:"updated_at" db:"updated_at"`
