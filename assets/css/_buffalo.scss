@@ -143,6 +143,22 @@ body{
   background-color: white;
 }
 
+.temp-mini-container{
+  justify-content: space-between;
+}
+
+.temp-mini-items{
+  text-decoration: underline;
+}
+
+.temp-mini{
+  display: flex;
+  align-items: center;
+  background-color: white;
+  height: 70px;
+  width: 200px;
+}
+
 .temp-border-as{
   border-left: solid 2px rgb(0,110,223);
 }
@@ -317,7 +333,7 @@ body{
   color: white;
 }
 
-td{
+td, .bb-gr{
   border-bottom: solid 1px lightgray;
 }
 
@@ -394,4 +410,16 @@ td{
 iframe{
   width: 90%;
   border: none;
+}
+
+.time-item1{
+  margin-right: 51px;
+}
+
+.time-item2{
+  margin-right: 30px;
+}
+
+.time-item3{
+  margin-right: 78px;
 }
