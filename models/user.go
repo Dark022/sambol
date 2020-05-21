@@ -8,8 +8,17 @@ import (
 )
 
 func LoadUserTable() ([]User, error) {
+
 	users := []User{}
 	err := DB.All(&users)
+
+	return users, err
+}
+
+func LoadUsersWO(ownerID uuid.UUID) ([]User, error) {
+
+	users := []User{}
+	err := DB.Where("id != ?", ownerID).All(&users)
 
 	return users, err
 }
