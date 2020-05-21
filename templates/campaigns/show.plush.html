@@ -2,13 +2,70 @@
     <a href="<%= campaignDeletePath({campaign_id: campaign.ID}) %>" data-confirm="Are you sure?" data-method="DELETE" class="btn btn-danger text-white mr-1">Delete</a>
 </div>
 <div class="temp-form p-3">
+    <div class=" bb-gr">
+        <div class="text-gr font-weight-bold">
+            <a href="/campaign" class="text-gr"><i class="fas fa-arrow-left"></i></a>
+            Opt in campaign
+        </div>
+        <div class="text-gr small my-3">
+            <span class="font-weight-bold">Created on:</span> 
+            <span  id="campaignCO"><%= campaign.CreatedAt %></span>
+        </div>
+    </div>
     <div>
-        <div class="text-gr">Opt in campaign</div>
-        <div class="text-gr">Created on: <%= campaign.CreatedAt %></div>
+        <div class="text-gr small mt-3">
+            <span class="font-weight-bold time-item1">Duration:</span> 
+            <i class="far fa-calendar"></i>
+            <span  id="campaignSD"><%= campaign.StartDate %></span>
+             to 
+            <i class="far fa-calendar"></i>
+            <span  id="campaignED"><%= campaign.EndDate %></span>
+        </div>
+        <div class="text-gr small my-1">
+            <span class="font-weight-bold time-item2">Time Period:</span> 
+            TBA
+        </div>
+        <div class="text-gr small">
+            <span class="font-weight-bold time-item3">Days:</span> 
+            TBA
+        </div>
     </div>
 </div>
 
-<section class="mt-5 bg-white py-3">
+<div class="d-flex my-3 w-100 temp-mini-container text-gr">
+    <div class="temp-mini">
+        <div class="temp-border-as pl-3">
+            <div class="h5 font-weight-bold temp-mini-items">TBA</div>
+            <div class="small">Total Sent Emails</div>
+        </div>
+    </div>
+    <div class="temp-mini">
+        <div class="temp-border-as pl-3">
+            <div class="h5 font-weight-bold temp-mini-items">TBA</div>
+            <div class="small">Total Opened Emails</div>
+        </div>
+    </div>
+    <div class="temp-mini">
+        <div class="temp-border-as pl-3">
+            <div class="h5 font-weight-bold temp-mini-items">TBA</div>
+            <div class="small">Phish Clicks</div>
+        </div>
+    </div>
+    <div class="temp-mini">
+        <div class="temp-border-as pl-3">
+            <div class="h5 font-weight-bold temp-mini-items">TBA</div>
+            <div class="small">Potential Shared Data</div>
+        </div>
+    </div>
+    <div class="temp-mini">
+        <div class="temp-border-as pl-3">
+            <div class="h5 font-weight-bold temp-mini-items">TBA</div>
+            <div class="small">Delivered</div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-white py-3">
     <div class="d-flex align-items-center mb-3">
         <div class="h5 text-gr temp-border-as pl-3">Users (<%= getTotalCampaignUsers(users) %>)</div>
         <input type="text" placeholder="Search Users" class="ml-3 form-control search" id="search">
