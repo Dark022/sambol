@@ -152,4 +152,16 @@ $(() => {
             });
         }     
     });
+
+    const ufmCreatedON = $("#campaignCO").text().split(" ");
+    const fmtCreatedON = `${ufmCreatedON[0]} ${ufmCreatedON[1]} ${ufmCreatedON[2]} ${ufmCreatedON[3]}`;
+    $("#campaignCO").text(fmtCreatedON);
+
+    const ufmStartDate = $("#campaignSD").text().split(" ");
+    const fmtStartDate = `${ufmStartDate[0]} ${ufmStartDate[1]} ${ufmStartDate[2]}`;
+    $("#campaignSD").text(fmtStartDate);
+
+    const ufmEndDate = $("#campaignED").text().split(" ");
+    const fmtEndDate = `${ufmEndDate[0]} ${ufmEndDate[1]} ${ufmEndDate[2]}`;
+    $("#campaignED").text(fmtEndDate);
 });
