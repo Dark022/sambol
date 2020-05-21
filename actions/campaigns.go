@@ -21,12 +21,26 @@ func ListCampaign(c buffalo.Context) error {
 }
 
 func NewCampaign(c buffalo.Context) error {
+	if c.Param("templateID") != "" {
+		templateID, err := uuid.FromString(c.Param("templateID"))
+		template, err := models.SearchID(templateID)
+		if err != nil {
+			return err
+		}
+		users, err := models.LoadUsersWO(template.Owner)
+		if err != nil {
+			return err
+		}
+		return c.Render(http.StatusOK, r.JSON(users))
+	}
+
 	today, tomorrow := models.TodayTomorrow()
 	campaign := models.Campaign{}
 	users, err := models.LoadUserTable()
 	if err != nil {
 		return err
 	}
+
 	UsersID := struct {
 		UsersID []uuid.UUID
 	}{}
@@ -37,6 +51,23 @@ func NewCampaign(c buffalo.Context) error {
 	c.Set("UsersID", UsersID)
 
 	return c.Render(http.StatusOK, r.HTML("campaigns/new.plush.html"))
+}
+
+func SaveCampaignUserListing(c buffalo.Context) error {
+	if c.Param("templateID") != "" {
+		templateID, err := uuid.FromString(c.Param("templateID"))
+		template, err := models.SearchID(templateID)
+		if err != nil {
+			return err
+		}
+		users, err := models.LoadUsersWO(template.Owner)
+		if err != nil {
+			return err
+		}
+		return c.Render(http.StatusOK, r.JSON(users))
+	}
+
+	return nil
 }
 
 func SaveCampaign(c buffalo.Context) error {
