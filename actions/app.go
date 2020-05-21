@@ -74,6 +74,7 @@ func App() *buffalo.App {
 		app.GET("/campaign/new", NewCampaign)
 		app.GET("/campaign/{campaign_id}/show", ShowCampaign)
 		app.POST("/campaign/save", SaveCampaign)
+		app.GET("/campaign/save", SaveCampaignUserListing)
 		app.DELETE("/campaign/{campaign_id}/delete/", DeleteCampaing)
 		app.GET("/campaign/{campaign_id}/edit/", EditCampaign)
 		app.PUT("/campaign/{campaign_id}/edit/save", UpdateCampaign)
